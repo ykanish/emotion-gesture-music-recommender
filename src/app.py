@@ -1,5 +1,8 @@
 import cv2
+
 from emotion.predict import predict_emotion
+from emotion.utils import emotion_to_mood
+
 
 def main():
     cap = cv2.VideoCapture(0)
@@ -10,6 +13,7 @@ def main():
             break
 
         emotion = predict_emotion(frame)
+        mood = emotion_to_mood(emotion)
 
         cv2.putText(
             frame,
@@ -18,6 +22,15 @@ def main():
             cv2.FONT_HERSHEY_SIMPLEX,
             1,
             (0, 255, 0),
+            2
+        )
+        cv2.putText(
+            frame,
+            f"Mood: {mood}",
+            (30, 80),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1,
+            (255, 0, 0),
             2
         )
 
